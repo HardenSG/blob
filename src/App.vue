@@ -1,26 +1,45 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <TopSlide></TopSlide>
+      <MainBody></MainBody>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TopSlide from '@/components/TopSlide'
+import MainBody from '@/pages/MainBody'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components:{
+    TopSlide,
+    MainBody
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  background:url(@/assets/1.webp) 100%;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+ul{
+  list-style: none;
+}
+ul li{
+  float: left;
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+.fade-leave-to {
+  display: none;
 }
 </style>
