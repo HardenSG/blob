@@ -37,9 +37,10 @@ export default {
         width: 100%;
         margin-top: 100px !important;
         padding: 40px 60px;
-        background-color: white;
+        background-color: var(--dark-mode-bg,white);
         border-radius: 10px;
         font-family: "隶书";
+        color: var(--dark-mode-text-color,black) ;
         opacity: .6;
         h4{
             float: right;

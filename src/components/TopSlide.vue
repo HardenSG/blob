@@ -6,42 +6,51 @@
             </h2>
         </div>
       </transition>
-      <button @click="isShow = !isShow">切换</button>
+      <button></button>
 </template>
 
 <script>
-import { ref } from '@vue/reactivity'
+import { ref ,watch } from 'vue'
+import listenScroll from '@/hooks/listenScroll'
 export default {
     name:'TopSlide',
     setup(){
         let isShow = ref(true)
+        let listen = listenScroll()
+        watch(listen.result,(newValue)=>{
+            newValue.value ? isShow.value = true : isShow.value = false
+        })
         return{
-            isShow
+            isShow,
+            listen
         }
-    }
+    },
 }
 </script>
 
 <style lang="less" scoped>
     div{
         position: fixed;
-        z-index: -1;
+        z-index: 1000;    
         width: 100%;
         height: 50px;
-        background-color:white;
+        background-color:var(--dark-mode-bg,white);
         opacity: .8;
         h2{
             text-align: center;
-            color: black;   
+            color: var(--dark-mode-text-color,black);   
             line-height: 50px;
             user-select: none;
         }
+        button{
+            opacity: 0;
+        }
     }
     .header-enter-active{
-        animation: animate .5s linear;
+        animation: animate .3s linear;
     }
     .header-leave-active{
-        animation: animate .5s linear reverse;
+        animation: animate .3s linear reverse;
     }
     @keyframes animate{
         from{

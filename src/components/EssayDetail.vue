@@ -1,13 +1,16 @@
 <template>
     <section>
+        <span class="iconfont" title="返回" @click="returnLastPage">
+            &#xe6ff;
+        </span>
         <h2>
-            {{param.id}}
+            {{param.name}}
         </h2>
     </section>
 </template>
 
 <script>
-import { getCurrentInstance, reactive, ref } from '@vue/runtime-core'
+import { getCurrentInstance, reactive } from '@vue/runtime-core'
 export default {
     name:'EssayDetail',
     setup(){
@@ -15,13 +18,19 @@ export default {
 
         let param = reactive(proxy.$router.currentRoute.value.query)
 
+        // 返回上一个页面
+        function returnLastPage(){
+            proxy.$router.go(-1)
+        }
+
         return {
-            param   
+            param,
+            returnLastPage   
         }
     },
     created() {
 
-        // console.log(this.$router.currentRoute.value);
+        console.log(this);
         
     },
 }
@@ -32,11 +41,16 @@ section{
     width: 100%;
     height: auto;
     padding: 40px 30px;
-    background-color: white;
-    opacity: .6;
+    background-color:var(--dark-mode-bg, white);
+    opacity: .7;
     border-radius: 10px;
+    color: var(--dark-mode-text-color,black);
     h2{
-        color: black;
+        color: var(--dark-mode-text-color,black);
+    }
+    .iconfont{
+        color: black !important;
+        cursor: pointer;
     }
 }
 </style>

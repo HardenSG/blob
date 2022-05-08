@@ -52,7 +52,7 @@ section{
   width: 100%;
   height: auto;
   padding: 40px 30px;
-  background-color: white;
+  background-color: var(--dark-mode-bg,white);
   opacity: .6;
   border-radius: 10px;
 }
