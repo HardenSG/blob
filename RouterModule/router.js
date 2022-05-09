@@ -1,20 +1,17 @@
 // lead into the express module
 const express = require('express')
+
+// lead into the token module
+const token = require('../createToken/token')
+
+// lead into the mysql module 
 const db = require('../database/mysql')
 
 // create the example of express.router called router
 const router = express.Router()
 
-//-------------------------------------------------------
-//you also can lead into middleware in router's file 
-const middleware = require("../middleware/middleware")
-
-// use the function utilize router
-// router.use(middleware.first)
-//--------------------------------------------------------
-
 // mounted this project to this example of express.router
-router.get('/',(req,res)=>{
+router.get('/api/',(req,res)=>{
     res.send({
         name:'ydq',
         age:20
@@ -22,7 +19,7 @@ router.get('/',(req,res)=>{
 })
 
 // this is a normal's interface but it's obvious that it's use the part middleware''s function
-router.post('/',middleware.first,(req,res)=>{
+router.post('/api/',middleware.first,(req,res)=>{
     // throw new Error('出错了catch this error！')
     // db.query("INSERT INTO users VALUES(1,'SG','当我在追光，我与光同航！',2767525216,'2767525216@qq.com')",(err,result)=>{
     //     // if (err) return new Error('Have a error in this mysql！')
@@ -34,28 +31,33 @@ router.post('/',middleware.first,(req,res)=>{
             resolve(result)
         })
     }).then(re=>{
-
-        let MysqlResult = []
-
-        Array.from(re).map( result=> {
-            // for (const key in result) {
-            //     MysqlResult = result[key]
-            // }
-            let content = {}
-            content.id = result.user_id
-            content.name = result.user_name
-            content.introduce = result.user_introduce
-            content.emial = result.user_email
-
-            MysqlResult.push(content)
-        } )
-
         res.send({
-            result:MysqlResult,
+            result:re,
             name:'好了好了！'
         })
     })
 })
 
-// export this module 
+// register's router
+router.post('/api/register',middleware.register,(req,res)=>{
+    res.send({
+        status:200,
+        body:req.body,
+        token:token.createToken({id:'1'})
+    })
+})
+
+//login's router
+router.post('/login',middleware.register,(req,res)=>{
+    res.send({
+        status:200,
+        body:req.body,
+        user:req.user
+    })  
+})
+
+router.post('/api/upload',middleware.register,(req,res)=>{
+})
+
+// export this module   
 module.exports = router

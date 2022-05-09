@@ -28,18 +28,30 @@ const app = express()
  * 
  * 5.   1. install this mysql module 
  *      2. require mysql and call mysql.createPool so that to create a example of mysql , this API need a Object and there are have four configuration items : host、user 、password、database  
- *   
- * 
- * 
+ *      3. you can use the API called db.query('Sql',[parameters in this Sql],callback(err,result))
+ *          
+ * 6. Web's development mode :
+ *      1. 服务端渲染: session
+ *      2. 前后端分离: recommend the JWT :(JSON WEB Token) contains three section : Header.Paylod.Signature .Ok! if you want to use jwt in express ,you need download two package called jsonwebtoken(create token's string)、express-jwt(salary the token )
  * 
  * 
  * 
  */
 
+//--------------------------------------------------
+//lead into the token's module 
+const token = require("./createToken/token")
+
+//register the module , remember that , if fronted of router so that , it must have Authorization in the header
+app.use(token.salaryToken())
+//--------------------------------------------------
+
+
+
 
 //---------------------------------------------------
 // lead into the mysql module 
-const db = require("./database/mysql")
+// const db = require("./database/mysql")
 
 //---------------------------------------------------
 
@@ -53,6 +65,7 @@ const cors = require("cors")
 //register this cors as a global middleware
 app.use(cors())
 //----------------------------------------------------
+
 
 
 
@@ -72,19 +85,15 @@ app.use(express.urlencoded({extended:false}))
 
 
 
-
-
 //------------------------------------------------------
 // lead into the middleware's module
-// const middleware = require('./middleware/middleware')
+const middleware = require('./middleware/middleware')
 
 // register this middleware , remember that arrange in order
-// app.use(middleware.first)
+app.use(middleware.err)
 
 // app.use(middleware.second)
 //-----------------------------------------------------
-
-
 
 
 
@@ -99,31 +108,9 @@ app.use(express.urlencoded({extended:false}))
 const router = require('./RouterModule/router')
 
 // register this router ,and add the fontend of the router called /api
-app.use('/api',router)
+// app.use('/api',router)
+app.use(router)
 //------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-//-----------------------------------------------------
-// lead into the error's module
-const error = require("./errorModule/error")
-
-// remember that error level middleware can not use above router because that it's take not effect
-app.use(error.error)
-//-----------------------------------------------------
-
-
-
-
 
 
 
