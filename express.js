@@ -33,7 +33,7 @@ const app = express()
  * 6. Web's development mode :
  *      1. 服务端渲染: session
  *      2. 前后端分离: recommend the JWT :(JSON WEB Token) contains three section : Header.Paylod.Signature .Ok! if you want to use jwt in express ,you need download two package called jsonwebtoken(create token's string)、express-jwt(salary the token )
- * 
+ *      
  * 
  * 
  */
@@ -111,12 +111,6 @@ const router = require('./RouterModule/router')
 // app.use('/api',router)
 app.use(router)
 //------------------------------------------------------
-
-
-
-
-
-
 
 // listen the port is 8082
 app.listen('8082',()=>{
