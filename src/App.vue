@@ -1,30 +1,65 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div>
+    <component :is='isShowLogin'></component>
+  </div>
 </template>
 
+<script lang="ts">
+import {  computed, defineAsyncComponent, getCurrentInstance, ref } from "@vue/runtime-core";
+
+const login = defineAsyncComponent(() => import("@/views/LoginCom.vue"))
+
+const MainCom = defineAsyncComponent(() => import("@/views/MainCom.vue"))
+
+export default{
+    components:{
+      MainCom,
+      login,
+    },
+    setup ( props , context ) {
+      
+      const  {proxy} = getCurrentInstance() 
+      
+      /**
+       * 切换登录和主界面
+       */
+      let isShowLogin = computed( () => {
+          switch( proxy.$store.state.isLog ){
+            case true : {
+              return MainCom
+            }
+            case false : {
+              return login
+            }
+          }
+        })
+
+      return {
+        isShowLogin
+      }
+    }
+}
+
+
+
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body{
+    background-color: var(--dark-mode-bg,rgb(227, 223, 223));
 
-nav {
-  padding: 30px;
-}
+  }
+  body.dark-mode {
+    
+    --dark-mode-bg:#2d2b2b;
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+    --dark-mode-text-color:#fff;
 
-nav a.router-link-exact-active {
-  color: #42b983;
+    transition: .3s;
+
 }
 </style>
