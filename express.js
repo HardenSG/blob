@@ -38,22 +38,19 @@ const app = express()
  * 
  */
 
-//--------------------------------------------------
-//lead into the token's module 
-const token = require("./createToken/token")
 
-//register the module , remember that , if fronted of router so that , it must have Authorization in the header
-app.use(token.salaryToken())
-//--------------------------------------------------
+//------------------------------------------------------
+// lead into the middleware's module
+const middleware = require('./middleware/middleware')
+
+// register this middleware , remember that arrange in order
+app.use(middleware.err)
+
+// app.use(middleware.second)
+//----------------------------------------------------
 
 
 
-
-//---------------------------------------------------
-// lead into the mysql module 
-// const db = require("./database/mysql")
-
-//---------------------------------------------------
 
 
 
@@ -65,6 +62,22 @@ const cors = require("cors")
 //register this cors as a global middleware
 app.use(cors())
 //----------------------------------------------------
+
+
+
+
+
+
+
+//--------------------------------------------------
+//lead into the token's module 
+const token = require("./createToken/token")
+
+//register the module , remember that , if fronted of router so that , it must have Authorization in the header
+app.use(token.salaryToken())
+//--------------------------------------------------
+
+
 
 
 
@@ -85,18 +98,6 @@ app.use(express.urlencoded({extended:false}))
 
 
 
-//------------------------------------------------------
-// lead into the middleware's module
-const middleware = require('./middleware/middleware')
-
-// register this middleware , remember that arrange in order
-app.use(middleware.err)
-
-// app.use(middleware.second)
-//-----------------------------------------------------
-
-
-
 
 
 
@@ -111,6 +112,11 @@ const router = require('./RouterModule/router')
 // app.use('/api',router)
 app.use(router)
 //------------------------------------------------------
+
+
+
+
+
 
 // listen the port is 8082
 app.listen('8082',()=>{

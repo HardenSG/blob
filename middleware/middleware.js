@@ -9,6 +9,7 @@ middleware.second = (req,res,next)=>{
     next()
 }
 
+//注册的中间件
 middleware.register = (req,res,next)=>{
     req.message = {
         email:req.body.email,
@@ -19,6 +20,7 @@ middleware.register = (req,res,next)=>{
     next()
 }
 
+//发送验证码的中间件
 middleware.sendCode = (req,res,next)=>{
     req.message = {
         email:req.body.email
@@ -26,15 +28,31 @@ middleware.sendCode = (req,res,next)=>{
     next()
 }
 
+// 登录的中间件
 middleware.login = (req,res,next)=>{
     req.message = {
         email:req.body.email,
-        password:req.body.password,
-        token:req.body.token
+        password:req.body.password
     }
     next()
 }
 
+middleware.makeui = ( req , res , next ) => {
+    req.message = {
+        user_email:req.user.user_email,
+        light:req.body.light,
+        dark:req.body.dark,
+        introduce:req.body.introduce,
+        location:req.body.location,
+        title:req.body.title,
+        word:req.body.word
+    }
+    next()
+}
+
+
+
+// 错误中间价
 middleware.err = (err,req,res,next) => {
     if (err.name === 'UnauthorizedError') {
         return res.send({status:401,msg:'无效的token'})

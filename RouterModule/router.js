@@ -1,9 +1,6 @@
 // lead into the express module
 const express = require('express')
 
-// lead into the token module
-const token = require('../createToken/token')
-
 // lead into the mysql module 
 const db = require('../database/mysql')
 
@@ -21,6 +18,16 @@ router.post('/api/register',middleware.register,callback.register)
 
 //login's router
 router.post('/api/login',middleware.login,callback.login)
+
+//makeui in back
+router.post('/makeui',middleware.makeui,callback.makeui)
+
+
+
+
+/**
+ * 以下是前台接口
+ */
 
 //receive the content and save 
 router.post('/api/markdown',middleware.register,(req,res)=>{
@@ -53,6 +60,22 @@ router.get('/api/getDetail',(req,res)=>{
         })
     })
 })
+
+//receive the message and init the page of fronted
+router.get( "/api/receive" , callback.receive)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // export this module   
