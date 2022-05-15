@@ -1,18 +1,51 @@
 <template>
       <TopSlide></TopSlide>
       <MainBody></MainBody>
+      <!-- <teleport to=''> -->
+        <img src=""/>
+      <!-- </teleport> -->
 </template>
 
 <script>
 import TopSlide from '@/components/TopSlide'
 import MainBody from '@/pages/MainBody'
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
+import axios from 'axios'
+import { useStore } from 'vuex'
+
 
 export default {
   name: 'App',
   components:{
     TopSlide,
     MainBody
+  },
+  setup () {
+    const store = useStore()
+
+    onBeforeMount( ( ) => {
+      axios({
+        url:"http://localhost:8082/api/receive",
+        data:{
+          email:'2767525216'
+        }
+      }).then ( res => {
+        const { dark_img , light_img , user_introduce , user_location , user_title ,user_word } = res.data.data
+
+        store.commit( "changeStateLocation", user_location)
+        store.commit( "changeStateIntroduce", user_introduce)
+        store.commit( "changeStateDarkImg", dark_img)
+        store.commit( "changeStateLightImg", light_img)
+        store.commit( "changeStateTitle", user_title)
+        store.commit( "changeStateWord", user_word)
+
+        document.querySelector("body").style.backgroundImage = `url(${light_img})`
+        
+        // document.querySelector(".dark-mode").style.backgroundImage = `url(${dark_img})`
+
+      } ) 
+
+    } )
   }
 }
 </script>
@@ -30,9 +63,8 @@ body{
   background-attachment: fixed;
   overflow-x: hidden;
   overflow-y: scroll;
-  transition: .4s;
 }
-body.dark-mode {
+.dark-mode {
     
     --dark-mode-bg:#5d5a5a;
 
@@ -43,6 +75,8 @@ body.dark-mode {
     background-size: 100% 100%;
     
     background-attachment: fixed;
+
+    transition: .4s;
 }
 @font-face {
   font-family: 'iconfont';  /* Project id 3383022 */

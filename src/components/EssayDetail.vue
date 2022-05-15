@@ -1,16 +1,60 @@
 <template>
-    <section>
+    <section v-show="content">
         <span class="iconfont" title="返回" @click="returnLastPage">
             &#xe6ff;
         </span>
         <h2>
             {{param.name}}
         </h2>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
+        <p v-html="content"></p>
     </section>
 </template>
 
 <script>
-import { getCurrentInstance, reactive } from '@vue/runtime-core'
+import { computed, getCurrentInstance, reactive, ref } from '@vue/runtime-core'
+import markdown from 'markdown-it'
+import axios from 'axios'
 export default {
     name:'EssayDetail',
     setup(){
@@ -18,19 +62,36 @@ export default {
 
         let param = reactive(proxy.$router.currentRoute.value.query)
 
+        let tempContent = ref('')
+
         // 返回上一个页面
         function returnLastPage(){
             proxy.$router.go(-1)
         }
 
+        let content = computed(()=>{
+            const md = new markdown()
+            const temp = md.render(proxy.tempContent)
+            return temp
+        })
+
         return {
-            param,
-            returnLastPage   
+            param,  
+            returnLastPage  ,
+            content ,
+            tempContent
         }
     },
     created() {
-
-        console.log(this);
+        axios({
+            url:'http://localhost:8082/api/getDetail',
+            method:'GET',
+            params:{
+                id:4
+            }
+        }).then(res=>{
+            this.tempContent = res.data.result.pubMessage
+        })
         
     },
 }

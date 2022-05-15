@@ -13,7 +13,7 @@
             <span class="tool iconfont">
                 &#xe64b;
             </span>
-        </template>
+        </template> 
         
         <transition name="icon">
             <div v-show="isSunShow">
@@ -32,8 +32,11 @@
         </transition>
         
         </el-popover>
+        
     </div>
-    
+    <!-- <span class="goTop iconfont" @click="goToTop">
+            &#xe64b;
+    </span> -->
 </template>
 
 <script>
@@ -51,6 +54,7 @@ export default {
 
             setTimeout(()=>{
                 document.querySelector('body').classList.add('dark-mode')
+                
                 isMornShow.value = !isMornShow.value
             },1200)
         }
@@ -90,12 +94,6 @@ export default {
         }
     },
     created(){
-        axios({
-            url:'http://localhost:8082/api/',
-            method:'POST'
-        }).then(res=>{
-            console.log(res.data);
-        })
         if (new Date().getHours() >= 19) {
             document.querySelector('body').classList.add('dark-mode')
             this.isMornShow = !this.isMornShow

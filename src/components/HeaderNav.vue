@@ -1,7 +1,7 @@
 <template>
   <section>
       <h1>
-          我的个人demo
+          {{ $store.getters.getTitle }}
       </h1>
       <h4>
           ----我的博客
@@ -15,7 +15,6 @@
             <router-link to="/introduce">介绍</router-link>
           </li>
           <li>
-              <!-- <router-link to="/">博客</router-link> -->
             <a href="javascript:;">联系我</a>
           </li>
           <li>
@@ -26,9 +25,19 @@
 </template>
 
 <script>
+import { ref } from '@vue/reactivity'
+import { onBeforeMount } from '@vue/runtime-core'
+import axios from 'axios'
 
 export default {
     name:"HeaderNav",
+    setup ( ) {
+        let headerContent = ref('')
+
+        return {
+            headerContent
+        }
+    }
 }
 </script>
 

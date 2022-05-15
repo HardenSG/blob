@@ -2,7 +2,7 @@
       <transition name="header">
         <div v-show="isShow">
             <h2>
-                当我在追光,我与光同航
+                {{ $store.getters.getWord }}
             </h2>
         </div>
       </transition>

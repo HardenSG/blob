@@ -177,7 +177,7 @@ export default {
         background-color: var(--dark-mode-bg,white);
         opacity: .6;
         border-radius: 10px;
-        transition: .3s;
+        transition: .5s;
         box-shadow: 0 0 6px white;
         color: var(--dark-mode-text-color,black);
         &:hover{
