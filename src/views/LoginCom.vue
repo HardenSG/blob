@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import { ref } from "@vue/reactivity";
+import { ref , ComponentInternalInstance } from "vue";
 import request from "@/utils/request";
 import { getCurrentInstance } from "@vue/runtime-core";
 export default {
@@ -83,7 +83,7 @@ export default {
     let code = ref("");
 
     
-    const { proxy } = getCurrentInstance()
+    const { proxy } = getCurrentInstance() as ComponentInternalInstance
 
     /**
      * 
@@ -93,17 +93,22 @@ export default {
         
       e.preventDefault();
 
-      console.log(proxy.$store);
+      console.log(proxy?.$store);
 
     //   发起login请求
       new request( 'http://localhost:8082/api/login' , {
             email:admin.value,
             password:password.value
         },false).post().then( res => {
-            if ( res.status === 200 ) {
-                alert(res.msg)
-                sessionStorage.setItem('token',JSON.stringify(res.token))
-                proxy.$store.dispatch('changeLogAction',true)
+          const re = res as any
+          console.log(re);
+          
+            if ( re.status == 200 ) {
+                alert(re.msg)
+                sessionStorage.setItem('token',JSON.stringify(re.token))
+                proxy?.$store.dispatch('changeLogAction',true)
+                proxy?.$store.dispatch('changeAdminAction','yandeqiang')
+                proxy?.$store.dispatch('changeHeaderAdvAction','http://36.133.40.168:8083/email.png')
             }
       } )
     }
@@ -125,18 +130,17 @@ export default {
           code: code.value,
         },
         false
-      )
-        .post()
-        .then((res) => {
-          if (res.status === 200) {
-            alert(res.msg);
-            sessionStorage.setItem("token", JSON.stringify(res.token));
+      ).post().then( ( res )  => {
+          const re = res as any
+          if (re.status === 200) {
+            alert(re.msg);
+            sessionStorage.setItem("token", JSON.stringify(re.token));
           } else {
-            alert(res.msg);
+            alert(re.msg);
           }
         });
     }
-
+        
     /**
      * 
      * @param 发送验证码接口
@@ -154,7 +158,7 @@ export default {
           { email: email.value },
           false
         ).post();
-        req.then((res) => {
+        req.then( ( res ) => {
           console.log(res);
         });
       }
@@ -164,6 +168,8 @@ export default {
      * registerSlide and LoginSlide都是切换
      */
     function registerSlide() {
+
+      //类型判别为HTMLElement就不会再报空对象的错了
       const box = <HTMLElement>document?.querySelector(".form-box")
 
       box.style.transform = "translateX(80%)";
@@ -171,6 +177,7 @@ export default {
       loginBox.value = false;
 
       registerBox.value = true;
+
     }
 
     function loginSlide() {
@@ -182,6 +189,7 @@ export default {
 
       loginBox.value = true;
     }
+    
     return{
         admin ,
         password ,

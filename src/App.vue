@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import {  computed, defineAsyncComponent, getCurrentInstance, ref } from "@vue/runtime-core";
+import {  computed, defineAsyncComponent, getCurrentInstance, ref , ComponentInternalInstance, State  } from "@vue/runtime-core";
 
 const login = defineAsyncComponent(() => import("@/views/LoginCom.vue"))
 
@@ -18,13 +18,16 @@ export default{
     },
     setup ( props , context ) {
       
-      const  {proxy} = getCurrentInstance() 
-      
+      const  { proxy } = getCurrentInstance() as ComponentInternalInstance 
+        
       /**
        * 切换登录和主界面
        */
       let isShowLogin = computed( () => {
-          switch( proxy.$store.state.isLog ){
+        
+        const a = proxy?.$store.state || '' 
+
+          switch( a['isLog'] ){
             case true : {
               return MainCom
             }
@@ -50,16 +53,30 @@ export default{
     box-sizing: border-box;
   }
   body{
-    background-color: var(--dark-mode-bg,rgb(227, 223, 223));
+
+    background-color: var(--dark-mode-bg,#d0cece);
+
+    color: var(--dark-mode-text-color,black);
 
   }
+
+  body.light-mode {
+    
+    --dark-mode-bg:#d0cece;
+
+    --dark-mode-text-color:black;
+
+    transition: 1.5s;
+
+}
+
   body.dark-mode {
     
     --dark-mode-bg:#2d2b2b;
 
     --dark-mode-text-color:#fff;
 
-    transition: .3s;
+    transition: 1.5s;
 
 }
 </style>

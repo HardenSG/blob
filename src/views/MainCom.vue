@@ -5,18 +5,29 @@
             <transition
                 name="animate__animated animate__bounce"
                 appear
-                enter-active-class="animate__slideInDown"
-                leave-active-class="animate__slideOutDown"
+                enter-active-class="animate__slideInLeft"
             >
-                <leftslide></leftslide>
+                <LeftSildeVue></LeftSildeVue>
             </transition>
         </el-aside>
         <el-container>
             <el-header>
-                <HeaderNav></HeaderNav>
+                <transition
+                    name="animate__animated animate__bounce"
+                    appear
+                    enter-active-class="animate__slideInDown"
+                >
+                    <HeaderNav></HeaderNav>
+                </transition>
             </el-header>
             <el-main>
-                <router-view></router-view>
+                <transition
+                    name="animate__animated animate__bounce"
+                    appear
+                    enter-active-class="animate__zoomIn"
+                >
+                    <router-view></router-view>
+                </transition>
             </el-main>
         </el-container>
         </el-container>
@@ -24,13 +35,13 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent } from 'vue'
-const leftslide = defineAsyncComponent(() => import("@/components/LeftSilde.vue"))
-import HeaderNav from '@/components/HeaderNav.vue'
-export default {
+// import { defineAsyncComponent } from 'vue'
+import LeftSildeVue from '@/components/leftslide/LeftSilde.vue'
+import HeaderNav from '@/components/header/HeaderNav.vue'
+export default {   
     name:'MainCom',
     components:{
-        leftslide,
+        LeftSildeVue,
         HeaderNav
     },
 

@@ -20,9 +20,9 @@ class Request implements request {
             url:this.url,
             method:"GET",
             data:this.data,
-            headers:{
-                'Content-Type':this.flag ? 'multipart/form-data' : 'application/json'
-            }
+            // headers:{
+            //     'Content-Type':this.flag ? 'multipart/form-data' : 'application/json'
+            // }
         }
         return await axios ( req )
     }
@@ -32,7 +32,6 @@ class Request implements request {
             method:"POST",
             data:this.data,
             headers:{
-                
                 'Content-Type':this.flag ? 'multipart/form-data' : 'application/json'
             }
         }
@@ -44,13 +43,17 @@ axios.interceptors.request.use(  config => {
 
     config.headers = config.headers || {}
 
-    config.headers.token =  sessionStorage.getItem('token')  ?  JSON.parse(<string>sessionStorage.getItem('token')) : ''
-
+    // if ( sessionStorage.getItem('token') ) {
+        config.headers.Authorization =  `Bearer ${JSON.parse(<string>sessionStorage.getItem('token'))}`
+    // }
+    // console.log(config);
+    // console.log(`Bearer ${JSON.parse(<string>sessionStorage.getItem('token'))}`);
+    
     return config
 })
 
 axios.interceptors.response.use(  res => {
-    return res.data 
+    return res.data
 })
 export default Request
 
