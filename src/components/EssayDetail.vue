@@ -7,93 +7,42 @@
             {{param.name}}
         </h2>
         <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
-        <p v-html="content"></p>
+        <img src="http://36.133.40.168:8083/uploadImg/img/wx.jpg"/>
+        <img src="http://36.133.40.168:8083/uploadImg/img/wx.jpg"/>
+        <img src="http://36.133.40.168:8083/uploadImg/img/wx.jpg"/>
     </section>
+    
 </template>
 
 <script>
-import { computed, getCurrentInstance, reactive, ref } from '@vue/runtime-core'
-import markdown from 'markdown-it'
+import { computed , onMounted, reactive, ref } from '@vue/runtime-core'
+import { useRouter } from 'vue-router'
 import axios from 'axios'
 export default {
     name:'EssayDetail',
+    components:{
+    },
     setup(){
-        const { proxy } = getCurrentInstance()
+        const router = useRouter( )
 
-        let param = reactive(proxy.$router.currentRoute.value.query)
+        console.log(router.currentRoute.value.query);
 
-        let tempContent = ref('')
+        let param = reactive(router.currentRoute.value.query)
 
         // 返回上一个页面
         function returnLastPage(){
-            proxy.$router.go(-1)
+            router.go(-1)
         }
 
-        let content = computed(()=>{
-            const md = new markdown()
-            const temp = md.render(proxy.tempContent)
-            return temp
-        })
+        let content = ref( " 服了 " )
 
         return {
             param,  
-            returnLastPage  ,
+            returnLastPage ,
             content ,
-            tempContent
         }
     },
-    created() {
-        axios({
-            url:'http://localhost:8082/api/getDetail',
-            method:'GET',
-            params:{
-                id:4
-            }
-        }).then(res=>{
-            this.tempContent = res.data.result.pubMessage
-        })
         
-    },
 }
 </script>
 
@@ -102,16 +51,22 @@ section{
     width: 100%;
     height: auto;
     padding: 40px 30px;
-    background-color:var(--dark-mode-bg, white);
-    opacity: .7;
+    opacity: .9;
+    box-shadow: 0 0 10px rgb(90, 88, 88);
+    border: 2px solid rgb(33, 33, 33);
     border-radius: 10px;
     color: var(--dark-mode-text-color,black);
-    h2{
-        color: var(--dark-mode-text-color,black);
-    }
+
+    transition: .4s;
     .iconfont{
         color: black !important;
         cursor: pointer;
+    }
+    img{
+        width: 85%;
+        // height: 400px;
+        margin-top: 10px;
+        margin-bottom: 1-px;
     }
 }
 </style>

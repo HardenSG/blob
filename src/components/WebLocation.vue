@@ -23,8 +23,12 @@ export default {
     width: 100%;
     height: auto;
     padding: 40px 30px ;
-    background-color: var(--dark-mode-bg,white);
-    opacity: .6;
     border-radius: 10px;
+    color: var(--dark-mode-text-color,black);
+
+
+    border: 2px solid rgb(66, 66, 66);
+    box-shadow: 0 0 10px rgb(78, 76, 76);
+    transition: .4s;
   }
 </style>

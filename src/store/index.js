@@ -6,7 +6,12 @@ const state = {
     lightImg:ref(""),
     darkImg:ref(""),
     introduce:ref(""),
-    location:ref("")
+    location:ref(""),
+
+
+
+    //左侧框
+    leftShow:false
 }
 
 const actions = {

@@ -174,12 +174,14 @@ export default {
         height: auto;
         padding: 40px 30px;
         margin-top: 20px;
-        background-color: var(--dark-mode-bg,white);
-        opacity: .6;
+        opacity: .8;
         border-radius: 10px;
-        transition: .5s;
-        box-shadow: 0 0 6px white;
+        transition: .4s;
+        box-shadow: 0 0 10px white;
+        border: 2px solid rgb(53, 52, 52);
         color: var(--dark-mode-text-color,black);
+        font-weight: 700;
+        font-size: 25px;
         &:hover{
             cursor: pointer;
             transform: scale(.9);

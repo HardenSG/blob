@@ -1,6 +1,6 @@
 <template>
   <section>
-    <!-- <h1>Hello Everyone</h1>
+    <h1>Hello Everyone</h1>
     <br>
     <br>
     <h2>
@@ -28,10 +28,10 @@
       <br>
       <br>
       因为知道自己的不足，才要永远的虚心接受！永远也不要失去信心，就像你在篮球场一样，这也是我在工作室给自己起名SG的原因，在篮球中SG是得分后卫的简称，为了勉励自己能够永远积极向上！
-    </h4> -->
-    <h2>
+    </h4>
+    <!-- <h2>
       {{ $store.getters.getIntroduce }}
-    </h2>
+    </h2> -->
   </section>
 </template>
 
@@ -55,8 +55,11 @@ section{
   width: 100%;
   height: auto;
   padding: 40px 30px;
-  background-color: var(--dark-mode-bg,white);
-  opacity: .6;
+  // background-color: var(--dark-mode-bg,black);
+  color: var(--dark-mode-text-color,black);
+  border: 2px solid rgb(75, 74, 74);
+  // opacity: .8;
   border-radius: 10px;
+  box-shadow: 0 0 10px rgb(43, 42, 42);
 }
 </style>

@@ -26,8 +26,6 @@
 
 <script>
 import { ref } from '@vue/reactivity'
-import { onBeforeMount } from '@vue/runtime-core'
-import axios from 'axios'
 
 export default {
     name:"HeaderNav",
@@ -46,13 +44,15 @@ export default {
         width: 100%;
         margin-top: 100px !important;
         padding: 40px 60px;
-        background-color: var(--dark-mode-bg,white);
+        border: 2px solid rgb(78, 76, 76);
+        box-shadow: 0 0 10px rgb(90, 89, 89);
         border-radius: 10px;
         font-family: "隶书";
         color: var(--dark-mode-text-color,black) ;
-        opacity: .6;
+        transition: .4s;
         h4{
             float: right;
+            transition: 0s;
         }
         hr{
             margin-top: 30px;
