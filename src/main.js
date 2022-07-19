@@ -7,6 +7,9 @@ import store from '@/store/index'
 // 引入router
 import router from '@/router/index'
 
+// 引入字体图标
+import("./assets/font_3383022_0v71tzgcfi3/iconfont.css")
+
 // 引入animate.css
 import("animate.css")   
 

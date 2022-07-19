@@ -12,7 +12,7 @@
             enter-active-class="animate__slideInLeft"
             leave-active-class="animate__slideOutLeft"
           >
-              <LeftSlide v-show="$store.state.leftShow"></LeftSlide>
+            <LeftSlide v-show="$store.state.leftShow"></LeftSlide>
           </transition>
           </el-affix>
         <el-container>
@@ -28,10 +28,9 @@ import TopSlide from '@/components/TopSlide'
 import MainBody from '@/pages/MainBody'
 import LeftSlide from './components/LeftSlide.vue'
 
-import { onBeforeMount, ref } from 'vue'
+import { onBeforeMount } from 'vue'
 import axios from 'axios'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
 
 
 export default {
@@ -43,26 +42,23 @@ export default {
   },
   setup () {
     const store = useStore()
-    
-    const router = useRouter()
-
     onBeforeMount( ( ) => {
       axios({
-        url:"http://36.133.40.168:8082/api/receive",
+        url:"http://localhost:8082/api/receive",
+        method:"GET",
         data:{
           email:'2767525216'
         }
       }).then ( res => {
-        const {  light_img , user_introduce , user_location , user_title ,user_word } = res.data.data
+        // 逻辑放在Vuex中的action中进行处理
+        store.dispatch("handleLog",res.data.data)
+        
+        // 由于根据自定义情况，你可能需要动态加载背景
+        // 可以将逻辑也放在action中，在后续修改中可以做此处理
+        // 由于远程加载可能会出现瞬间的页面卡顿如：不能直接加载出
+        // 所以可以先仿FWF做一个loading
+        document.querySelector("body").style.backgroundImage = `url("../assets/微信图片_20220517203235.jpg"))`
 
-        store.commit( "changeStateLocation", user_location)
-        store.commit( "changeStateIntroduce", user_introduce)
-        store.commit( "changeStateLightImg", light_img)
-        store.commit( "changeStateTitle", user_title)
-        store.commit( "changeStateWord", user_word)
-        
-        document.querySelector("body").style.backgroundImage = `url(${light_img})`
-        
       } ) 
 
     } )
@@ -83,6 +79,7 @@ body{
   overflow-x: hidden;
   overflow-y: scroll;
   margin-bottom: 30px;
+  background-image: url(./assets/微信图片_20220517203235.jpg);
 }
 .dark-mode {
     
@@ -93,23 +90,6 @@ body{
     background-size: 100% 100%;
     
     background-attachment: fixed;
-}
-@font-face {
-  font-family: 'iconfont';  /* Project id 3383022 */
-  src: url('http://at.alicdn.com/t/font_3383022_0ayag7wyme0a.woff2?t=1652617079379') format('woff2'),
-       url('http://at.alicdn.com/t/font_3383022_0ayag7wyme0a.woff?t=1652617079379') format('woff'),
-       url('http://at.alicdn.com/t/font_3383022_0ayag7wyme0a.ttf?t=1652617079379') format('truetype');
-}
-/* http: */
-.iconfont {
-  font-family: "iconfont" !important;
-  font-size: 25px;
-  color: yellow;
-  font-weight: 500;
-  user-select: none;
-  -webkit-font-smoothing: antialiased;
-  -webkit-text-stroke-width: 0.2px;
-  -moz-osx-font-smoothing: grayscale;
 }
 ul{
   list-style: none;
@@ -127,13 +107,30 @@ h1{
   font-size: 30px;
 }
 
+img{
+  width: 100%;
+}
+
 ::-webkit-scrollbar {
   width: 0;
 }
-
-
 /* 布局容器header */
 .el-header{
   padding: 0 !important;
 }
+
+/* 代码标签样式设置 */
+pre{
+  padding: 20px 30px;
+  border-radius: 10px;
+  background-color: rgb(144, 141, 143);
+  margin: 5px;
+}
+code{
+  color: black;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Consolas";
+}
+
 </style>

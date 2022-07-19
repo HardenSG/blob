@@ -8,14 +8,20 @@ const state = {
     introduce:ref(""),
     location:ref(""),
 
-
-
     //左侧框
     leftShow:false
 }
 
 const actions = {
-    
+    handleLog(context,argu){
+        const {  light_img , user_introduce , user_location , user_title ,user_word } = argu
+        // handle this log's commit state
+        context.commit( "changeStateLocation", user_location)
+        context.commit( "changeStateIntroduce", user_introduce)
+        context.commit( "changeStateLightImg", light_img)
+        context.commit( "changeStateTitle", user_title)
+        context.commit( "changeStateWord", user_word)
+    }
 }
 
 const mutations = {
@@ -36,7 +42,7 @@ const mutations = {
     },
     changeStateLocation( state , newValue ){
         state.location = newValue
-    }
+    },
 }
 
 const getters = {

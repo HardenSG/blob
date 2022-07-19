@@ -2,11 +2,11 @@ import { createRouter , createWebHashHistory} from 'vue-router'
 
 const routes = [
     {
-        path:'/:id',
+        path:'/',
         component:()=>import("@/components/EssayMain")
     },
     {
-        path:'/detail',
+        path:'/detail/:id',
         name:'detail',
         component:()=>import('@/components/EssayDetail')
     },
@@ -19,11 +19,6 @@ const routes = [
         path:'/location',
         name:"location",
         component:()=>import("@/components/WebLocation")
-    },
-    {
-        path:'/:catchAll(.*)',
-        name:'404',
-        component:  ( ) =>  import("@/pages/NoFound.vue") 
     },
 ]
 

@@ -10,9 +10,8 @@
 </template>
 
 <script>
-import { onBeforeMount, ref ,watch } from 'vue'
+import { ref ,watch } from 'vue'
 import listenScroll from '@/hooks/listenScroll'
-import axios from 'axios'
 import DrakUtils from './DrakUtils.vue'
 
 export default {
@@ -22,6 +21,8 @@ export default {
     },
     setup(){
         let isShow = ref(true)
+
+        // 是进行的hooks监听
         let listen = listenScroll()
         watch(listen.result,(newValue)=>{
             newValue.value ? isShow.value = true : isShow.value = false
